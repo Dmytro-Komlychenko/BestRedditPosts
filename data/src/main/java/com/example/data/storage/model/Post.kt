@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Post(
-
     @SerializedName("approved_at_utc")
     @Expose
     var approvedAtUtc: Int,

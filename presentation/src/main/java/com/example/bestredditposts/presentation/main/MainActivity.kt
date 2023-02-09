@@ -1,10 +1,12 @@
-package com.example.bestredditposts.presentation
+package com.example.bestredditposts.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.bestredditposts.R
 import com.example.bestredditposts.app.App
 import com.example.bestredditposts.databinding.ActivityMainBinding
+import com.example.bestredditposts.presentation.postList.PostItemFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -19,20 +21,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         (applicationContext as App).appComponent.inject(this)
         viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.liveDataPost.observe(this) {
-
-            binding.textView1.text = it.authorFullname
-            binding.textView2.setText(it.thumbnail)
-            binding.textView3.text = it.approvedAtUtc.toString()
-            binding.textView4.text = it.commentsCount.toString()
-        }
         viewModel.getPosts()
     }
 }

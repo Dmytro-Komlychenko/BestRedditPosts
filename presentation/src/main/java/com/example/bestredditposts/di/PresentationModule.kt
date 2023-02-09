@@ -1,7 +1,7 @@
 package com.example.bestredditposts.di
 
 import android.content.Context
-import com.example.bestredditposts.presentation.MainViewModelFactory
+import com.example.bestredditposts.presentation.main.MainViewModelFactory
 import com.example.domain.usecase.GetTopPostsUseCase
 import dagger.Module
 import dagger.Provides

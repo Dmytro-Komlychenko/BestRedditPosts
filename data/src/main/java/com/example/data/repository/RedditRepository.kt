@@ -5,18 +5,25 @@ import com.example.domain.model.Post
 
 class RedditRepository : com.example.domain.repositoryI.RedditRepository {
 
-    override suspend fun getTopPosts(): Post? {
-        return RetrofitInstance.api.getTopPosts().body()?.posts?.posts?.get(3)?.data?.let {
-            mapPostToDomain(it)
+    val posts: ArrayList<Post?> = arrayListOf()
+
+    override suspend fun getTopPosts(): ArrayList<Post?> {
+
+        RetrofitInstance.api.getTopPosts().body()?.posts?.posts?.forEach { extendedPost ->
+            posts.add(mapPostToDomain(extendedPost.data))
         }
+        return posts
     }
 
     private fun mapPostToDomain(dataPost: com.example.data.storage.model.Post): Post {
+        val id = if(posts.isEmpty()) 1 else posts.last()?.id?.plus(1) ?: 1
+
         return Post(
-            dataPost.approvedAtUtc,
-            dataPost.authorFullname,
-            dataPost.thumbnail,
-            dataPost.commentsCount
+            id = id,
+            approvedAtUtc = dataPost.approvedAtUtc,
+            authorFullname = dataPost.authorFullname,
+            thumbnail = dataPost.thumbnail,
+            commentsCount = dataPost.commentsCount
         )
     }
 }

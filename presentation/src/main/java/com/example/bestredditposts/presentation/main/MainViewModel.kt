@@ -1,4 +1,4 @@
-package com.example.bestredditposts.presentation
+package com.example.bestredditposts.presentation.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,7 @@ class MainViewModel(
     private val getTopPostsUseCase: GetTopPostsUseCase
 ) : ViewModel() {
 
-    val liveDataPost: MutableLiveData<Post> = MutableLiveData()
+    val liveDataPost: MutableLiveData<ArrayList<Post?>> = MutableLiveData()
 
     fun getPosts() {
         viewModelScope.launch {

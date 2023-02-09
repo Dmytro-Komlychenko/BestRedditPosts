@@ -1,4 +1,4 @@
-package com.example.bestredditposts.presentation
+package com.example.bestredditposts.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
