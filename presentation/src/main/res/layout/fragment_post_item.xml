@@ -1,55 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/postLayout"
+    style="@style/post"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:background="@color/teal_200"
-    android:orientation="horizontal">
+    android:layout_marginVertical="8dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="2dp">
 
     <TextView
-        android:id="@+id/tv_id"
+        android:id="@+id/tvAuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tv_id"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Author Name"
+        app:layout_constraintBottom_toBottomOf="@+id/dot1"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dot1" />
+
+    <TextView
+        android:id="@+id/dot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/interpunkt"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCountHours"
+        app:layout_constraintStart_toEndOf="@+id/tvAuthorName"
+        app:layout_constraintTop_toTopOf="@+id/tvCountHours" />
+
+    <TextView
+        android:id="@+id/tvCountHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="xx hours ago"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/dot1"
+        app:layout_constraintTop_toTopOf="@+id/button" />
+
+    <Button
+
+        android:id="@+id/button"
+        style="@style/rounded_button"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:padding="0dp"
+        android:text="@string/join"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="@+id/imageButton" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@style/moreButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_author_name"
+        android:id="@+id/tvTitle"
+        style="@style/postTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tv_author_name"
+        android:layout_marginTop="6dp"
+        android:text="My dream came true. It grew from a single after hours hobby project to a small indie dev team that we are right now. Here is how our space game looks right now."
+        app:layout_constraintStart_toStartOf="@+id/tvAuthorName"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountHours"
+
+        />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_id" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-    <EditText
-        android:id="@+id/et_thumbnail_link"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="et_thumbnail_link"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_author_name" />
-
-    <TextView
-        android:id="@+id/tv_approved_at_utc"
+    <Button
+        android:id="@+id/btnLikes"
+        style="@style/likeButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tv_approved_at_utc"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="40dp"
+        android:stateListAnimator="@null"
+        android:text="29k"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_thumbnail_link" />
+        app:layout_constraintTop_toBottomOf="@+id/image" />
 
-    <TextView
-        android:id="@+id/tv_comments_count"
+    <Button
+        android:id="@+id/btnDislike"
+        style="@style/dislikeButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:stateListAnimator="@null"
+        app:layout_constraintStart_toEndOf="@+id/btnLikes"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
+
+    <Button
+        android:id="@+id/btnComments"
+        style="@style/commentsButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="tv_comments_count"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_approved_at_utc" />
+        android:layout_height="40dp"
+        android:stateListAnimator="@null"
+        android:text="xxxx"
+        app:layout_constraintStart_toEndOf="@+id/btnDislike"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
+    <Button
+        android:id="@+id/btnShare"
+        style="@style/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:stateListAnimator="@null"
+        android:text="@string/share"
+        app:layout_constraintStart_toEndOf="@+id/btnComments"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

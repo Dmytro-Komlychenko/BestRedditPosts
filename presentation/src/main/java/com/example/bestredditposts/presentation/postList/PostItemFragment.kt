@@ -1,6 +1,7 @@
 package com.example.bestredditposts.presentation.postList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.example.bestredditposts.presentation.main.MainViewModel
 class PostItemFragment : Fragment() {
 
     private lateinit var binding: FragmentPostListBinding
-    val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: MainViewModel by activityViewModels()
     lateinit var adapter: PostItemAdapter
 
     override fun onCreateView(
@@ -23,6 +24,7 @@ class PostItemFragment : Fragment() {
         binding = FragmentPostListBinding.inflate(layoutInflater)
 
         viewModel.liveDataPost.observe(viewLifecycleOwner) {
+            Log.i("PostItemFragment", "liveDataPost.observe")
             adapter = PostItemAdapter(it)
             binding.recyclerView.adapter = adapter
         }

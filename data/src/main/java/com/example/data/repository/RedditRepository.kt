@@ -20,9 +20,13 @@ class RedditRepository : com.example.domain.repositoryI.RedditRepository {
 
         return Post(
             id = id,
-            approvedAtUtc = dataPost.approvedAtUtc,
-            authorFullname = dataPost.authorFullname,
+            hoursAgo = dataPost.createdUNIX,
+            title = dataPost.title,
+            authorName = dataPost.authorName,
             thumbnail = dataPost.thumbnail,
+            thumbnailWidth = dataPost.thumbnailWidth,
+            thumbnailHeight = dataPost.thumbnailHeight,
+            likesCount = dataPost.likesCount,
             commentsCount = dataPost.commentsCount
         )
     }
