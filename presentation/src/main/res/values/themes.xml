@@ -45,7 +45,7 @@
     </style>
 
     <style name="dislikeButton" parent="defaultActionButton">
-        <item name="android:drawableLeft">@drawable/arrow_down_light</item>
+        <item name="android:src">@drawable/arrow_down_light</item>
     </style>
 
     <style name="commentsButton" parent="defaultActionButton">
@@ -65,5 +65,11 @@
         <item name="android:textSize">10sp</item>
         <item name="android:padding">0dp</item>
     </style>
+
+    <style name="updateButton" parent="defaultActionButton">
+        <item name="android:src">@drawable/update_light</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
 
 </resources>
