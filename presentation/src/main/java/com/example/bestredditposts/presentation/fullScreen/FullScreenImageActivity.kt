@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.bestredditposts.databinding.ActivityFullScreenImageBinding
-import com.example.bestredditposts.presentation.postList.FullScreenImageKey
+import com.example.bestredditposts.presentation.postList.PostItemAdapter
 import com.squareup.picasso.Picasso
 
 class FullScreenImageActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class FullScreenImageActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[FullScreenImageViewModel::class.java]
 
-        viewModel.imageLink.value = intent.getStringExtra(FullScreenImageKey)
+        viewModel.imageLink.value = intent.getStringExtra(PostItemAdapter.FULL_SCREEN_IMAGE_CONST)
 
         Picasso.get()
             .load(viewModel.imageLink.value)

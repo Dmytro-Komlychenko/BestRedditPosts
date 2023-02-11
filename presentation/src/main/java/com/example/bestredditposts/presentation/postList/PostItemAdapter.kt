@@ -15,8 +15,7 @@ import com.example.domain.utils.NumberConverter
 import com.example.domain.utils.TimeConverter
 import com.squareup.picasso.Picasso
 
-const val FullScreenImageKey = "FullScreenImageKey"
-const val ImageKey = "ImageKey"
+
 
 class PostItemAdapter(
     private val posts: ArrayList<Post?>,
@@ -51,6 +50,8 @@ class PostItemAdapter(
             binding.btnLikes.text = NumberConverter.convertNumberToShortFormat(post.commentsCount)
             binding.btnComments.text = post.commentsCount.toString()
 
+            binding.image.setAspectRatio(post.thumbnailWidth ?: 0, post.thumbnailHeight ?: 0)
+
             Picasso.get()
                 .load(post.thumbnail)
                 //.resize(post.thumbnailWidth ?: 0, post.thumbnailHeight ?: 0)
@@ -62,13 +63,17 @@ class PostItemAdapter(
 
                 val options = ActivityOptions.makeSceneTransitionAnimation(
                     context as Activity,
-                    Pair(binding.image, ImageKey)
+                    Pair(binding.image, IMAGE_TRANSITION_ANIMATION_CONST)
                 )
 
-                intent.putExtra(FullScreenImageKey, post.thumbnail)
+                intent.putExtra(FULL_SCREEN_IMAGE_CONST, post.thumbnail)
                 context.startActivity(intent, options.toBundle())
             }
         }
     }
 
+    companion object {
+        const val FULL_SCREEN_IMAGE_CONST = "FullScreenImageConst"
+        const val IMAGE_TRANSITION_ANIMATION_CONST = "ImageTransitionAnimationConst"
+    }
 }
