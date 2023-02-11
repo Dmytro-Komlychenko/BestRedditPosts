@@ -1,18 +1,27 @@
 package com.example.bestredditposts.presentation.postList
 
+import android.app.Activity
+import android.app.ActivityOptions
+import android.content.Context
+import android.content.Intent
+import android.util.Pair
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bestredditposts.databinding.FragmentPostItemBinding
+import com.example.bestredditposts.presentation.fullScreen.FullScreenImageActivity
 import com.example.domain.model.Post
 import com.example.domain.utils.NumberConverter
 import com.example.domain.utils.TimeConverter
 import com.squareup.picasso.Picasso
 
-class PostItemAdapter(
-    private val posts: ArrayList<Post?>
-) : RecyclerView.Adapter<PostItemAdapter.ViewHolder>() {
+const val FullScreenImageKey = "FullScreenImageKey"
+const val ImageKey = "ImageKey"
 
+class PostItemAdapter(
+    private val posts: ArrayList<Post?>,
+    private val context: Context
+) : RecyclerView.Adapter<PostItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -44,8 +53,21 @@ class PostItemAdapter(
 
             Picasso.get()
                 .load(post.thumbnail)
-                .resize(post.thumbnailWidth ?: 0, post.thumbnailHeight ?: 0)
-                .into(binding.image);
+                //.resize(post.thumbnailWidth ?: 0, post.thumbnailHeight ?: 0)
+                .into(binding.image)
+
+            binding.image.setOnClickListener {
+                //запускаем активити и отдаем ей post.thumbnail
+                val intent = Intent(context, FullScreenImageActivity::class.java)
+
+                val options = ActivityOptions.makeSceneTransitionAnimation(
+                    context as Activity,
+                    Pair(binding.image, ImageKey)
+                )
+
+                intent.putExtra(FullScreenImageKey, post.thumbnail)
+                context.startActivity(intent, options.toBundle())
+            }
         }
     }
 

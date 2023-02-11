@@ -24,7 +24,7 @@ class PostItemFragment : Fragment() {
         binding = FragmentPostListBinding.inflate(layoutInflater)
 
         viewModel.liveDataPost.observe(viewLifecycleOwner) {
-            adapter = PostItemAdapter(it)
+            adapter = PostItemAdapter(it, requireContext())
             binding.recyclerView.adapter = adapter
         }
 

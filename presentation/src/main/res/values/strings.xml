@@ -5,4 +5,7 @@
     <string name="interpunkt">·</string>
     <string name="join">Join</string>
     <string name="update">update</string>
+    <string name="no_internet">No internet</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
