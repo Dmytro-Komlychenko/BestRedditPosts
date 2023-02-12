@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
+
     @Inject
     lateinit var mainViewModelFactory: MainViewModelFactory
 
@@ -64,8 +65,7 @@ class MainActivity : AppCompatActivity() {
                         binding.fragmentContainerView,
                         resources.getString(R.string.no_internet),
                         Snackbar.LENGTH_SHORT or Snackbar.LENGTH_INDEFINITE
-                    )
-                        .show()
+                    ).show()
                 } else {
                     viewModel.getPosts()
                     //TODO: можно сохранить no_internet в sharedPrefs, и если раньше не было а сейчас появился то показать Snackbar о подключении

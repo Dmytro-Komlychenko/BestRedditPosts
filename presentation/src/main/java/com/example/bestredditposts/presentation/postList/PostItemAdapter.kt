@@ -4,17 +4,21 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.util.Pair
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bestredditposts.R
 import com.example.bestredditposts.databinding.FragmentPostItemBinding
 import com.example.bestredditposts.presentation.fullScreen.FullScreenImageActivity
+import com.example.bestredditposts.utils.ImageDownloader
 import com.example.domain.model.Post
 import com.example.domain.utils.NumberConverter
 import com.example.domain.utils.TimeConverter
 import com.squareup.picasso.Picasso
-
 
 
 class PostItemAdapter(
@@ -39,7 +43,6 @@ class PostItemAdapter(
     override fun getItemCount(): Int = posts.size
 
 
-
     inner class ViewHolder(private val binding: FragmentPostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -54,11 +57,9 @@ class PostItemAdapter(
 
             Picasso.get()
                 .load(post.thumbnail)
-                //.resize(post.thumbnailWidth ?: 0, post.thumbnailHeight ?: 0)
                 .into(binding.image)
 
             binding.image.setOnClickListener {
-                //запускаем активити и отдаем ей post.thumbnail
                 val intent = Intent(context, FullScreenImageActivity::class.java)
 
                 val options = ActivityOptions.makeSceneTransitionAnimation(
@@ -68,12 +69,74 @@ class PostItemAdapter(
 
                 intent.putExtra(FULL_SCREEN_IMAGE_CONST, post.thumbnail)
                 context.startActivity(intent, options.toBundle())
+                hideMoreMenu(it)
             }
+
+            binding.btnMore.setOnClickListener {
+                if (binding.moreView.visibility == View.GONE) {
+                    binding.moreView.visibility = View.VISIBLE
+                    Log.i("hideMoreMenu", "View.GONE")
+                } else if (binding.moreView.visibility == View.VISIBLE) {
+                    binding.moreView.visibility = View.GONE
+                    Log.i("hideMoreMenu", "View.GONE")
+                }
+                hideMoreMenu(it)
+            }
+
+
+            binding.moreView.setNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.btnDownloadImage -> ImageDownloader.downloadImageIntoGallery(
+                        context,
+                        binding.image
+                    )
+                    else -> true
+                }
+            }
+
+            onHideMoreMenu(binding.postLayout)
+        }
+
+        private fun onHideMoreMenu(view: View) {
+            if (!view.hasOnClickListeners()) {
+                view.setOnClickListener {
+                    hideMoreMenu(view)
+                }
+            }
+            if (view is ViewGroup)
+                (view).children.forEach { onHideMoreMenu(it) }
+        }
+
+
+        private fun hideMoreMenu(view: View) {
+            if (view.id != binding.btnMore.id) binding.moreView.visibility = View.GONE
         }
     }
+
 
     companion object {
         const val FULL_SCREEN_IMAGE_CONST = "FullScreenImageConst"
         const val IMAGE_TRANSITION_ANIMATION_CONST = "ImageTransitionAnimationConst"
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
