@@ -36,13 +36,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
 
         if (!isOnline) replaceFragment(NoInternetFragment())
-
-        viewModel.liveDataPost.observe(this) {
-            val currentFragment =
-                supportFragmentManager.findFragmentById(binding.fragmentContainerView.id)
-            if (currentFragment != PostItemFragment())
-                replaceFragment(PostItemFragment())
-        }
+        else  replaceFragment(PostItemFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -67,8 +61,8 @@ class MainActivity : AppCompatActivity() {
                         Snackbar.LENGTH_SHORT or Snackbar.LENGTH_INDEFINITE
                     ).show()
                 } else {
-                    viewModel.getPosts()
-                    //TODO: можно сохранить no_internet в sharedPrefs, и если раньше не было а сейчас появился то показать Snackbar о подключении
+                   viewModel.getPostList()
+
                 }
             }
         }

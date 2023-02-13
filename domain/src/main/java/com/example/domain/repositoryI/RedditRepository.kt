@@ -1,7 +1,9 @@
 package com.example.domain.repositoryI
 
+import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.example.domain.model.Post
 
 interface RedditRepository {
-    suspend fun getTopPosts(): ArrayList<Post?>
+    fun getTopPosts(): LiveData<PagingData<Post>>
 }

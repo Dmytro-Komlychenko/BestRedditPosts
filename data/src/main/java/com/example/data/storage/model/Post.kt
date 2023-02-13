@@ -5,6 +5,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Post(
+
+    @SerializedName("name")
+    @Expose
+    var name: String,
+
     @SerializedName("created_utc")
     @Expose
     var createdUNIX: Long,

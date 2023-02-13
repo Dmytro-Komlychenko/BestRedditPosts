@@ -1,29 +1,22 @@
 package com.example.bestredditposts.presentation.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.domain.model.Post
 import com.example.domain.usecase.GetTopPostsUseCase
-import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getTopPostsUseCase: GetTopPostsUseCase
 ) : ViewModel() {
 
-    val liveDataPost: MutableLiveData<ArrayList<Post?>> = MutableLiveData()
+    val errorMessage = MutableLiveData<String>()
 
-    init {
-        getPosts()
-    }
-    fun getPosts() {
-        viewModelScope.launch {
-            try {
-                liveDataPost.value = getTopPostsUseCase.execute()
-            } catch (e: Exception) {
-            }
-
-        }
+    fun getPostList(): LiveData<PagingData<Post>> {
+        return getTopPostsUseCase.execute().cachedIn(viewModelScope)
     }
 
 }

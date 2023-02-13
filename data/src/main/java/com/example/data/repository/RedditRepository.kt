@@ -1,33 +1,29 @@
 package com.example.data.repository
 
-import com.example.data.storage.retrofit.RetrofitInstance
+import androidx.lifecycle.LiveData
+import androidx.paging.*
+import com.example.data.PostPagingSource
 import com.example.domain.model.Post
+import kotlinx.coroutines.delay
 
 class RedditRepository : com.example.domain.repositoryI.RedditRepository {
 
-    val posts: ArrayList<Post?> = arrayListOf()
 
-    override suspend fun getTopPosts(): ArrayList<Post?> {
-
-        RetrofitInstance.api.getTopPosts().body()?.posts?.posts?.forEach { extendedPost ->
-            posts.add(mapPostToDomain(extendedPost.data))
-        }
-        return posts
+    override fun getTopPosts(): LiveData<PagingData<Post>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                enablePlaceholders = false,
+                initialLoadSize = 1
+            ),
+            pagingSourceFactory = {
+                PostPagingSource()
+            }
+            , initialKey = 1
+        ).liveData
     }
 
-    private fun mapPostToDomain(dataPost: com.example.data.storage.model.Post): Post {
-        val id = if(posts.isEmpty()) 1 else posts.last()?.id?.plus(1) ?: 1
-
-        return Post(
-            id = id,
-            hoursAgo = dataPost.createdUNIX,
-            title = dataPost.title,
-            authorName = dataPost.authorName,
-            thumbnail = dataPost.thumbnail,
-            thumbnailWidth = dataPost.thumbnailWidth,
-            thumbnailHeight = dataPost.thumbnailHeight,
-            likesCount = dataPost.likesCount,
-            commentsCount = dataPost.commentsCount
-        )
+    companion object {
+        const val PAGE_SIZE = 25
     }
 }
