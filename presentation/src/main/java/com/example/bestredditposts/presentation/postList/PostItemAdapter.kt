@@ -38,7 +38,10 @@ class PostItemAdapter(val context: Context) :
         return PostViewHolder(binding, context)
     }
 
-    class PostViewHolder(private val binding: FragmentPostItemBinding,private val context: Context) :
+    class PostViewHolder(
+        private val binding: FragmentPostItemBinding,
+        private val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
             binding.tvAuthorName.text = post.authorName
@@ -49,9 +52,14 @@ class PostItemAdapter(val context: Context) :
 
             binding.image.setAspectRatio(post.thumbnailWidth ?: 0, post.thumbnailHeight ?: 0)
 
-            Picasso.get()
-                .load(post.thumbnail)
-                .into(binding.image)
+            if (post.thumbnail == "default") {
+                binding.image.visibility = View.GONE
+            } else {
+                binding.image.visibility = View.VISIBLE
+                Picasso.get()
+                    .load(post.thumbnail)
+                    .into(binding.image)
+            }
 
             binding.image.setOnClickListener {
                 val intent = Intent(context, FullScreenImageActivity::class.java)
@@ -77,7 +85,6 @@ class PostItemAdapter(val context: Context) :
                 hideMoreMenu(it)
             }
 
-
             binding.moreView.setNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.btnDownloadImage -> ImageDownloader.downloadImageIntoGallery(
@@ -101,11 +108,11 @@ class PostItemAdapter(val context: Context) :
                 (view).children.forEach { onHideMoreMenu(it) }
         }
 
-
         private fun hideMoreMenu(view: View) {
             if (view.id != binding.btnMore.id) binding.moreView.visibility = View.GONE
         }
     }
+
 
     object PostComparator : DiffUtil.ItemCallback<Post>() {
         override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
