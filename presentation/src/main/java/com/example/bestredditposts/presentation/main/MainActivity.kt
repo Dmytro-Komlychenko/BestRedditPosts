@@ -11,7 +11,7 @@ import com.example.bestredditposts.app.App
 import com.example.bestredditposts.databinding.ActivityMainBinding
 import com.example.bestredditposts.presentation.noInternet.InternetConnectionCheck
 import com.example.bestredditposts.presentation.noInternet.NoInternetFragment
-import com.example.bestredditposts.presentation.postList.PostItemFragment
+import com.example.bestredditposts.presentation.postList.PostsFragment
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -35,8 +35,12 @@ class MainActivity : AppCompatActivity() {
         (applicationContext as App).appComponent.inject(this)
         viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
 
-        if (!isOnline) replaceFragment(NoInternetFragment())
-        else  replaceFragment(PostItemFragment())
+        showFragmentDependingOnInternet()
+    }
+
+    private fun showFragmentDependingOnInternet() {
+        if (!isOnline && viewModel.posts.value == null) replaceFragment(NoInternetFragment())
+        else replaceFragment(PostsFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -61,8 +65,8 @@ class MainActivity : AppCompatActivity() {
                         Snackbar.LENGTH_SHORT or Snackbar.LENGTH_INDEFINITE
                     ).show()
                 } else {
-                   viewModel.getPostList()
-
+                    viewModel.updatePosts.value = true
+                    showFragmentDependingOnInternet()
                 }
             }
         }

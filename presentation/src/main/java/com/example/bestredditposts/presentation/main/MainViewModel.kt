@@ -15,6 +15,10 @@ class MainViewModel(
 
     val errorMessage = MutableLiveData<String>()
 
+    val posts: MutableLiveData<PagingData<Post>> = MutableLiveData()
+
+    val updatePosts: MutableLiveData<Boolean> = MutableLiveData(false)
+
     fun getPostList(): LiveData<PagingData<Post>> {
         return getTopPostsUseCase.execute().cachedIn(viewModelScope)
     }
