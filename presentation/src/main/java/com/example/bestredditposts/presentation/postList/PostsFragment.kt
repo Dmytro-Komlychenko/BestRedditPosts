@@ -10,14 +10,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bestredditposts.databinding.FragmentPostListBinding
-import com.example.bestredditposts.presentation.main.MainViewModel
 import com.example.bestredditposts.presentation.noInternet.InternetConnectionCheck
 import kotlinx.coroutines.launch
 
 class PostsFragment : Fragment() {
 
     private lateinit var binding: FragmentPostListBinding
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: PostsViewModel by activityViewModels()
     lateinit var adapter: PostItemAdapter
 
 

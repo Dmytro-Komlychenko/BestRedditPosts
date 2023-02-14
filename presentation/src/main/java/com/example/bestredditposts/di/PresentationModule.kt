@@ -1,7 +1,7 @@
 package com.example.bestredditposts.di
 
 import android.content.Context
-import com.example.bestredditposts.presentation.main.MainViewModelFactory
+import com.example.bestredditposts.presentation.postList.PostsViewModelFactory
 import com.example.domain.usecase.GetTopPostsUseCase
 import dagger.Module
 import dagger.Provides
@@ -17,8 +17,8 @@ class PresentationModule(val context: Context) {
     @Provides
     fun provideMainViewModelFactory(
         getTopPostsUseCase: GetTopPostsUseCase,
-    ): MainViewModelFactory {
-        return MainViewModelFactory(
+    ): PostsViewModelFactory {
+        return PostsViewModelFactory(
             getTopPostsUseCase = getTopPostsUseCase,
         )
     }

@@ -12,6 +12,8 @@ import com.example.bestredditposts.databinding.ActivityMainBinding
 import com.example.bestredditposts.presentation.noInternet.InternetConnectionCheck
 import com.example.bestredditposts.presentation.noInternet.NoInternetFragment
 import com.example.bestredditposts.presentation.postList.PostsFragment
+import com.example.bestredditposts.presentation.postList.PostsViewModel
+import com.example.bestredditposts.presentation.postList.PostsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
@@ -19,10 +21,10 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: PostsViewModel
 
     @Inject
-    lateinit var mainViewModelFactory: MainViewModelFactory
+    lateinit var postsViewModelFactory: PostsViewModelFactory
 
     private val isOnline get() = InternetConnectionCheck.isOnline(this)
 
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         (applicationContext as App).appComponent.inject(this)
-        viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, postsViewModelFactory)[PostsViewModel::class.java]
 
         showFragmentDependingOnInternet()
     }

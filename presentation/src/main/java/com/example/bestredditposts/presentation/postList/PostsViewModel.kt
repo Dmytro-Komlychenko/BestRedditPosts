@@ -1,4 +1,4 @@
-package com.example.bestredditposts.presentation.main
+package com.example.bestredditposts.presentation.postList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import androidx.paging.cachedIn
 import com.example.domain.model.Post
 import com.example.domain.usecase.GetTopPostsUseCase
 
-class MainViewModel(
+class PostsViewModel(
     private val getTopPostsUseCase: GetTopPostsUseCase
 ) : ViewModel() {
 
