@@ -1,26 +1,30 @@
 package com.example.data
 
-import androidx.paging.*
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.example.data.storage.retrofit.RetrofitInstance
 import com.example.domain.model.Post
 
-class PostPagingSource: PagingSource<Int, Post>() { // "t3_110qf88"
+class PostPagingSource : PagingSource<Int, Post>() {
 
     private var lastPostID: String? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Post> {
 
         return try {
-            val position = params.key ?: 1
+            val pageIndex = params.key ?: 1
 
 
             val posts: ArrayList<Post> = arrayListOf()
-            RetrofitInstance.api.getTopPosts(DEFAULT_COUNT_POSTS, lastPostID).body()?.posts?.posts?.forEach { extendedPost ->
+            RetrofitInstance.api.getTopPosts(DEFAULT_COUNT_POSTS, lastPostID)
+                .body()?.posts?.posts?.forEach { extendedPost ->
                 posts.add(mapPostToDomain(extendedPost.data, posts.count()))
             }
             lastPostID = posts.lastOrNull()?.name
-            LoadResult.Page(data = posts, prevKey = if (position == 1) null else position - 1,
-                nextKey = position + 1)
+            LoadResult.Page(
+                data = posts, prevKey = if (pageIndex == 1) null else pageIndex - 1,
+                nextKey = pageIndex + 1
+            )
         } catch (e: Exception) {
             LoadResult.Error(e)
         }

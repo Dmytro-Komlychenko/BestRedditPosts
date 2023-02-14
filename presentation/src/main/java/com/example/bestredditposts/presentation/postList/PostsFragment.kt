@@ -8,9 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import com.example.bestredditposts.databinding.FragmentPostListBinding
-import com.example.bestredditposts.presentation.noInternet.InternetConnectionCheck
 import kotlinx.coroutines.launch
 
 class PostsFragment : Fragment() {
@@ -32,7 +30,7 @@ class PostsFragment : Fragment() {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
 
-        binding.recyclerView.adapter?.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        //binding.recyclerView.adapter?.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         adapter = PostItemAdapter(requireContext())
         binding.recyclerView.adapter = adapter
@@ -57,7 +55,7 @@ class PostsFragment : Fragment() {
     private fun refreshList() {
         lifecycleScope.launch {
             viewModel.getPostList().observe(viewLifecycleOwner) {
-                if (InternetConnectionCheck.isOnline(requireContext())) {
+                if (/*InternetConnectionCheck.isOnline(requireContext()) && */viewModel.posts.value == null) {
                     it?.let {
                         adapter = PostItemAdapter(requireContext())
                         binding.recyclerView.adapter = adapter
